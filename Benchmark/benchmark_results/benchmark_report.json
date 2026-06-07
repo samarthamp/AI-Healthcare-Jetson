@@ -1,0 +1,1071 @@
+{
+  "args": {
+    "checkpoint": "tinyresecg_v3.pth",
+    "output_dir": "benchmark_results",
+    "device": "cuda",
+    "batch_size": 1,
+    "channels": 2,
+    "samples": 1280,
+    "num_classes": 2,
+    "dropout": 0.35,
+    "warmup": 100,
+    "iterations": 1000,
+    "repeats": 3,
+    "threads": 0,
+    "seed": 42,
+    "dtype": "float32",
+    "input_npy": null,
+    "no_load_checkpoint": false,
+    "allow_missing_keys": false,
+    "cudnn_benchmark": false,
+    "save_output": false,
+    "with_tegrastats": true
+  },
+  "system": {
+    "timestamp": "2026-06-07T13:07:31",
+    "python": "3.10.20 (main, Mar 11 2026, 17:41:27) [GCC 14.3.0]",
+    "platform": "Linux-5.15.148-tegra-aarch64-with-glibc2.35",
+    "machine": "aarch64",
+    "torch": "2.5.0a0+872d972e41.nv24.08",
+    "cuda_available": true,
+    "device_requested": "cuda",
+    "jetson_model": "NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super",
+    "nv_tegra_release": "# R36 (release), REVISION: 4.7, GCID: 42132812, BOARD: generic, EABI: aarch64, DATE: Thu Sep 18 22:54:44 UTC 2025\n# KERNEL_VARIANT: oot\nTARGET_USERSPACE_LIB_DIR=nvidia\nTARGET_USERSPACE_LIB_DIR_PATH=usr/lib/aarch64-linux-gnu/nvidia",
+    "nvpmodel": "NV Power Mode: MAXN_SUPER\n2",
+    "jetson_clocks": "SOC family:tegra234  Machine:NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super\nError: Run this script(/usr/bin/jetson_clocks) as a root user",
+    "cuda_device": "Orin",
+    "cuda_capability": [
+      8,
+      7
+    ],
+    "cuda_runtime": "12.6",
+    "cudnn": 90300
+  },
+  "checkpoint": {
+    "checkpoint_path": "tinyresecg_v3.pth",
+    "checkpoint_format": "raw_state_dict",
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "ignored_profile_keys": [
+      "total_ops",
+      "total_params",
+      "block1.total_ops",
+      "block1.total_params",
+      "block1.shortcut.total_ops",
+      "block1.shortcut.total_params",
+      "block1.se.total_ops",
+      "block1.se.total_params",
+      "block1.drop.total_ops",
+      "block1.drop.total_params",
+      "block2.total_ops",
+      "block2.total_params",
+      "block2.se.total_ops",
+      "block2.se.total_params",
+      "block3.total_ops",
+      "block3.total_params",
+      "block3.se.total_ops",
+      "block3.se.total_params",
+      "block4.total_ops",
+      "block4.total_params",
+      "block4.shortcut.total_ops",
+      "block4.shortcut.total_params",
+      "block4.se.total_ops",
+      "block4.se.total_params",
+      "block4.drop.total_ops",
+      "block4.drop.total_params"
+    ]
+  },
+  "model": {
+    "total_params": 49762,
+    "trainable_params": 49762,
+    "param_memory_mib": 0.18982696533203125
+  },
+  "input_shape": [
+    1,
+    2,
+    1280
+  ],
+  "output_shape": [
+    1,
+    2
+  ],
+  "operations": {
+    "macs": 19663120,
+    "ops": 729762,
+    "estimated_flops": 40056002
+  },
+  "latency": {
+    "mean_ms": 6.988120331843694,
+    "median_ms": 6.2543840408325195,
+    "min_ms": 0.8554880023002625,
+    "max_ms": 25.237855911254883,
+    "std_ms": 2.5796127370165687,
+    "p90_ms": 10.365619087219239,
+    "p95_ms": 10.834594774246215,
+    "p99_ms": 12.543151330947877,
+    "throughput_samples_per_s": 143.0999972114343,
+    "repeats": [
+      {
+        "mean_ms": 7.632072768747807,
+        "median_ms": 7.7310240268707275,
+        "min_ms": 0.8599680066108704,
+        "max_ms": 15.389375686645508,
+        "std_ms": 2.3604845225666757,
+        "p90_ms": 10.513472270965575,
+        "p95_ms": 10.998897171020507,
+        "p99_ms": 12.544998836517333,
+        "throughput_samples_per_s": 131.02600437653714
+      },
+      {
+        "mean_ms": 7.108410371720791,
+        "median_ms": 5.8617119789123535,
+        "min_ms": 0.8554880023002625,
+        "max_ms": 15.653023719787598,
+        "std_ms": 2.7218564589314824,
+        "p90_ms": 10.537052440643311,
+        "p95_ms": 10.959997034072876,
+        "p99_ms": 12.339993324279785,
+        "throughput_samples_per_s": 140.6784284680967
+      },
+      {
+        "mean_ms": 6.223877855062485,
+        "median_ms": 6.089215993881226,
+        "min_ms": 0.8839679956436157,
+        "max_ms": 25.237855911254883,
+        "std_ms": 2.443277482527399,
+        "p90_ms": 8.973596477508545,
+        "p95_ms": 9.766569709777832,
+        "p99_ms": 13.876315116882322,
+        "throughput_samples_per_s": 160.67153361414424
+      }
+    ],
+    "iterations": 1000,
+    "warmup": 100
+  },
+  "memory": {
+    "allocated_mib": 8.353,
+    "max_allocated_mib": 9.3535,
+    "max_reserved_mib": 22.0
+  },
+  "layer_breakdown": [
+    {
+      "name": "stem.0",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        2,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 224,
+      "macs": 286720,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "stem.1",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 32,
+      "macs": 0,
+      "ops": 40960,
+      "note": ""
+    },
+    {
+      "name": "stem.2",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": ""
+    },
+    {
+      "name": "block1.conv1",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 1792,
+      "macs": 2293760,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block1.bn1",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 32,
+      "macs": 0,
+      "ops": 40960,
+      "note": ""
+    },
+    {
+      "name": "block1.relu",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": ""
+    },
+    {
+      "name": "block1.conv2",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 1792,
+      "macs": 2293760,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block1.bn2",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 32,
+      "macs": 0,
+      "ops": 40960,
+      "note": ""
+    },
+    {
+      "name": "block1.se.fc1",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        16
+      ],
+      "output_shape": [
+        1,
+        4
+      ],
+      "params": 64,
+      "macs": 64,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block1.se.fc2",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        4
+      ],
+      "output_shape": [
+        1,
+        16
+      ],
+      "params": 64,
+      "macs": 64,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block1.se",
+      "type": "SEGate",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 40980,
+      "note": "SE mean, activation, sigmoid, and scaling only; Linear ops are counted separately."
+    },
+    {
+      "name": "block1.relu",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": ""
+    },
+    {
+      "name": "block1",
+      "type": "ResBlock",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        1280
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": "Residual add only; child module ops are counted separately."
+    },
+    {
+      "name": "pool1",
+      "type": "MaxPool1d",
+      "input_shape": [
+        1,
+        16,
+        1280
+      ],
+      "output_shape": [
+        1,
+        16,
+        640
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": ""
+    },
+    {
+      "name": "block2.shortcut.0",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        16,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 512,
+      "macs": 327680,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block2.shortcut.1",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        32,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 64,
+      "macs": 0,
+      "ops": 40960,
+      "note": ""
+    },
+    {
+      "name": "block2.conv1",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        16,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 3584,
+      "macs": 2293760,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block2.bn1",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        32,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 64,
+      "macs": 0,
+      "ops": 40960,
+      "note": ""
+    },
+    {
+      "name": "block2.relu",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        32,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": ""
+    },
+    {
+      "name": "block2.conv2",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        32,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 7168,
+      "macs": 4587520,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block2.bn2",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        32,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 64,
+      "macs": 0,
+      "ops": 40960,
+      "note": ""
+    },
+    {
+      "name": "block2.se.fc1",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        32
+      ],
+      "output_shape": [
+        1,
+        8
+      ],
+      "params": 256,
+      "macs": 256,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block2.se.fc2",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        8
+      ],
+      "output_shape": [
+        1,
+        32
+      ],
+      "params": 256,
+      "macs": 256,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block2.se",
+      "type": "SEGate",
+      "input_shape": [
+        1,
+        32,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 41000,
+      "note": "SE mean, activation, sigmoid, and scaling only; Linear ops are counted separately."
+    },
+    {
+      "name": "block2.relu",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        32,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": ""
+    },
+    {
+      "name": "block2",
+      "type": "ResBlock",
+      "input_shape": [
+        1,
+        16,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        640
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": "Residual add only; child module ops are counted separately."
+    },
+    {
+      "name": "pool2",
+      "type": "MaxPool1d",
+      "input_shape": [
+        1,
+        32,
+        640
+      ],
+      "output_shape": [
+        1,
+        32,
+        320
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 20480,
+      "note": ""
+    },
+    {
+      "name": "block3.shortcut.0",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        32,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 1280,
+      "macs": 409600,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block3.shortcut.1",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        40,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 80,
+      "macs": 0,
+      "ops": 25600,
+      "note": ""
+    },
+    {
+      "name": "block3.conv1",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        32,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 6400,
+      "macs": 2048000,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block3.bn1",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        40,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 80,
+      "macs": 0,
+      "ops": 25600,
+      "note": ""
+    },
+    {
+      "name": "block3.relu",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        40,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 12800,
+      "note": ""
+    },
+    {
+      "name": "block3.conv2",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        40,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 8000,
+      "macs": 2560000,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block3.bn2",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        40,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 80,
+      "macs": 0,
+      "ops": 25600,
+      "note": ""
+    },
+    {
+      "name": "block3.se.fc1",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        40
+      ],
+      "output_shape": [
+        1,
+        10
+      ],
+      "params": 400,
+      "macs": 400,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block3.se.fc2",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        10
+      ],
+      "output_shape": [
+        1,
+        40
+      ],
+      "params": 400,
+      "macs": 400,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block3.se",
+      "type": "SEGate",
+      "input_shape": [
+        1,
+        40,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 25650,
+      "note": "SE mean, activation, sigmoid, and scaling only; Linear ops are counted separately."
+    },
+    {
+      "name": "block3.relu",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        40,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 12800,
+      "note": ""
+    },
+    {
+      "name": "block3",
+      "type": "ResBlock",
+      "input_shape": [
+        1,
+        32,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        320
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 12800,
+      "note": "Residual add only; child module ops are counted separately."
+    },
+    {
+      "name": "pool3",
+      "type": "MaxPool1d",
+      "input_shape": [
+        1,
+        40,
+        320
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 12800,
+      "note": ""
+    },
+    {
+      "name": "block4.conv1",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 8000,
+      "macs": 1280000,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block4.bn1",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 80,
+      "macs": 0,
+      "ops": 12800,
+      "note": ""
+    },
+    {
+      "name": "block4.relu",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 6400,
+      "note": ""
+    },
+    {
+      "name": "block4.conv2",
+      "type": "Conv1d",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 8000,
+      "macs": 1280000,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block4.bn2",
+      "type": "BatchNorm1d",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 80,
+      "macs": 0,
+      "ops": 12800,
+      "note": ""
+    },
+    {
+      "name": "block4.se.fc1",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        40
+      ],
+      "output_shape": [
+        1,
+        10
+      ],
+      "params": 400,
+      "macs": 400,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block4.se.fc2",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        10
+      ],
+      "output_shape": [
+        1,
+        40
+      ],
+      "params": 400,
+      "macs": 400,
+      "ops": 0,
+      "note": ""
+    },
+    {
+      "name": "block4.se",
+      "type": "SEGate",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 12850,
+      "note": "SE mean, activation, sigmoid, and scaling only; Linear ops are counted separately."
+    },
+    {
+      "name": "block4.relu",
+      "type": "ReLU",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 6400,
+      "note": ""
+    },
+    {
+      "name": "block4",
+      "type": "ResBlock",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        160
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 6400,
+      "note": "Residual add only; child module ops are counted separately."
+    },
+    {
+      "name": "gap",
+      "type": "AdaptiveAvgPool1d",
+      "input_shape": [
+        1,
+        40,
+        160
+      ],
+      "output_shape": [
+        1,
+        40,
+        1
+      ],
+      "params": 0,
+      "macs": 0,
+      "ops": 6400,
+      "note": ""
+    },
+    {
+      "name": "fc",
+      "type": "Linear",
+      "input_shape": [
+        1,
+        40
+      ],
+      "output_shape": [
+        1,
+        2
+      ],
+      "params": 82,
+      "macs": 80,
+      "ops": 2,
+      "note": ""
+    }
+  ],
+  "tegrastats_log": "benchmark_results/tegrastats.log"
+}

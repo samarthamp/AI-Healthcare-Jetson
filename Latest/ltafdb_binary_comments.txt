@@ -1,0 +1,198 @@
+"""
+create_patient_windows.py
+=========================
+Windowing script for LTAFDB binary ECG classification (Normal vs AFIB).
+
+Dataset specs:
+  - PhysioNet LTAFDB (Long-Term AF Database)
+  - Sampling rate : 128 Hz
+  - Leads         : 2 (ECG1, ECG2)
+  - Annotations   : rhythm-level (.atr), WFDB format
+
+Window parameters:
+  - Window size   : 10 s  →  1280 samples
+  - Overlap       : 5 s   →  640 samples  (50% overlap)
+  - Step size     : 640 samples
+
+Label assignment per window:
+  - Majority-vote over all annotation samples inside the window.
+  - Windows where AFIB occupies ≥ AFIB_THRESHOLD fraction → label 1 (AFIB)
+  - Windows where Normal occupies ≥ NORMAL_THRESHOLD fraction → label 0 (Normal)
+  - Windows with mixed / other rhythms (AFL, J, …) → SKIPPED by default
+    (set SKIP_MIXED = False to force majority-vote on those too)
+
+Preprocessing:
+  - Bandpass filter 0.5–40 Hz (4th-order Butterworth, zero-phase)
+  - Per-window z-score normalisation (zero mean, unit variance per channel)
+
+Output:
+  One pair of .npy files per patient written to OUTPUT_DIR:
+      {patient_id}_X.npy   shape (N, 1280, 2)  float32
+      {patient_id}_y.npy   shape (N,)           int64
+
+Usage:
+  python create_patient_windows.py
+
+Requirements:
+  pip install wfdb numpy scipy
+
+
+
+Bandpass Filter:
+    Zero-phase Butterworth bandpass filter applied channel-wise.
+
+    Parameters
+    ----------
+    signal : (N, C) float array
+    fs     : sampling rate in Hz
+    low    : lower cutoff Hz
+    high   : upper cutoff Hz
+    order  : filter order (applied twice for zero-phase, effective order = 2*order)
+
+    Returns
+    -------
+    filtered : (N, C) float array
+   
+ 
+    """
+    Normalise each channel of a window independently to zero mean, unit std.
+
+    Parameters
+    ----------
+    window : (W, C) array
+    eps    : small constant to avoid division by zero for flat signals
+
+    Returns
+    -------
+    normalised : (W, C) array
+    """
+	
+ """
+    Convert rhythm-level annotations into a per-sample integer label array.
+
+    WFDB rhythm annotations mark the *start* of a rhythm segment in
+    `annotation.sample` with the rhythm name in `annotation.aux_note`.
+    We propagate each label forward until the next annotation.
+
+    Label encoding:
+        0  = Normal sinus
+        1  = AFIB
+       -1  = Other / unknown
+
+    Parameters
+    ----------
+    record_len : total number of samples in the record
+    annotation : wfdb.Annotation object
+
+    Returns
+    -------
+    labels : (record_len,) int8 array
+    """
+  """
+    Load, filter, window, and label one LTAFDB patient.
+
+    Returns
+    -------
+    X : (N, 1280, 2) float32 — windowed ECG segments
+    y : (N,)          int64   — window labels (0=Normal, 1=AFIB)
+
+    Raises FileNotFoundError if the record does not exist.
+    """
+	
+Train.py
+
+"""
+train.py  —  TinyResECG-v2  Binary ECG classification  (Normal vs AFIB)
+=========================================================================
+
+Changes from previous run (based on confusion matrix analysis):
+
+  Previous results:
+    Normal  recall=99.8%  precision=77.2%  (over-predicted Normal)
+    AFIB    recall=91.6%  precision=99.9%  <- actual problem
+    Train F1 stuck at 0.74 (sampler making batches 50/50, metric misleading)
+
+  Root causes fixed here:
+    1. WeightedRandomSampler REMOVED  — was underexposing AFIB at train time
+    2. Class weights flipped          — now upweight AFIB (recall=91.6% needs help)
+    3. Focal Loss ON                  — focuses on the 7799 hard AFIB->Normal errors
+    4. Label smoothing = 0            — was blurring the AFIB gradient signal
+    5. LR warmup added                — best_epoch=3 means model needed gentler start
+    6. Patience increased to 10       — stop cutting training short
+    7. Batch size back to 32          — larger batch was diluting minority signal
+"""
+
+"""
+    Multi-class focal loss with per-class weighting.
+    Downweights well-classified examples, focuses on hard ones.
+    gamma=2 is standard; higher gamma = more focus on hard examples.
+    """
+	
+ecg_dataset.py
+"""
+ecg_dataset.py  —  ECGDataset for LTAFDB binary classification
+Improvements over v1:
+  - Stronger, more varied training augmentations
+  - Gaussian noise, time-shift, channel dropout, magnitude warp
+  - Consistent interface with is_train flag
+"""
+
+ """
+    Patient-wise ECG dataset loader for LTAFDB windowed npy files.
+
+    Each patient has two files:
+        {patient_id}_X.npy  —  shape (N, window_len, 2)
+        {patient_id}_y.npy  —  shape (N,)  int labels  0=Normal, 1=AFIB
+
+    __getitem__ returns:
+        signal  : torch.float32 tensor  (2, window_len)   [C, T] format
+        label   : torch.long   tensor   scalar
+    """
+
+ """
+        signal: (2, T)  float32
+        Returns augmented signal of same shape.
+        All augmentations are applied independently with their own probability.
+        """
+
+model.py
+"""
+model.py  —  TinyResECG-v2 with Squeeze-and-Excitation (SE) attention
+
+Architecture design goals:
+  - Strictly < 50K parameters (well within 100K hard limit)
+  - Edge-deployable: no complex ops, Conv1d + BN + ReLU only
+  - SE channel attention after each residual block to help the model
+    focus on discriminative frequency features (AFIB has irregular RR intervals)
+  - Depthwise-separable option for final block to reduce FLOPs
+
+Parameter budget breakdown (approximate):
+  stem:    2→16   ~  0.3K
+  block1: 16→16   ~  3.8K
+  block2: 16→32   ~ 12.0K
+  block3: 32→40   ~ 18.8K
+  block4: 40→40   ~ 14.8K
+  FC head:         < 0.1K
+  Total:          ~49.8K  (under 50K hard limit)
+"""
+    """
+    Lightweight channel attention.
+    r=4 keeps the FC bottleneck small.
+    For C=16 → 16/4=4 hidden units → 2*(16*4)=128 params
+    For C=32 → 2*(32*8)=512 params
+    For C=48 → 2*(48*12)=1152 params
+    """
+
+  """
+    Two Conv1d layers with BN + ReLU, skip connection, then SE gate.
+    kernel_size=7 captures ~55ms context at 128 Hz (adequate for P-QRS-T).
+    """
+	
+  """
+    3-block residual network for 2-lead ECG binary classification.
+
+    Input:  (B, 2, 1280)   — 10 s × 128 Hz, 2 leads
+    Output: (B, 2)         — logits [Normal, AFIB]
+
+    Parameter count: ~43K
+    """
