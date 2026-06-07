@@ -1,0 +1,18 @@
+# Core training and inference dependencies observed in conda env dnn_env.
+numpy==1.26.1
+pandas==2.3.3
+scikit-learn==1.7.2
+scipy==1.15.3
+torch==2.5.0a0+872d972e41.nv24.8
+
+# Analysis, plotting, and notebook support present in dnn_env.
+matplotlib==3.10.8
+jupyter==1.1.1
+ipykernel==7.2.0
+
+# Preprocessing dependency used by Latest/create_patient_windows.py.
+# Install this before regenerating windowed ECG .npy files.
+wfdb
+
+# Optional profiler used by Latest/train.py when available.
+thop
